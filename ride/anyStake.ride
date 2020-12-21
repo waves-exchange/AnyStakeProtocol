@@ -287,7 +287,7 @@ func executeGetRequest(baseAssetStr: String, userAddressStr: String, getTxIdStr:
   let baseAssetId = baseAssetStr.fromBase58String()
   let internalBaseAssetStr = assetCfgArray[IdxCfgInternalBaseAsset]
 
-  let operationKey = keyOperation("G", internalBaseAssetStr, userAddressStr, i.transactionId.toBase58String())
+  let operationKey = keyOperation("G", internalBaseAssetStr, userAddressStr, getTxIdStr)
   let operationArray = getStringOrFail(operationKey)
     .split(SEP)
 
