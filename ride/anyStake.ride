@@ -14,11 +14,11 @@ func failExecuteGet(msg: String, baseAssetStr: String, userAddressStr: String, g
 func keyAssetCfg(baseAssetStr: String) = {"%s%s%s__config__asset__" + baseAssetStr}
 
 func keyNextInternalAssetId() = {"%s__nextInternalAssetId"}
-func keyPriceLast(internalBasetAssetStr: String) = {"%s%s%s__price__last__" + internalBasetAssetStr}
-func keyPriceHistory(internalBasetAssetStr: String, h: Int, timestamp: Int) = {makeString(["%s%s%s%d%d__price__history", internalBasetAssetStr, h.toString(), timestamp.toString()], SEP)}
-func keyTotalLocked(internalBasetAssetStr: String) = {"%s%s%s__total__locked__" + internalBasetAssetStr}
-func keyTotalLockedByUser(internalBaseAssetStr: String, userAddressStr: String) = {makeString(["%s%s%s%s__total__locked", internalBaseAssetStr, userAddressStr], SEP)}
-func keyMappingsInternal2baseAssetId(internalBaseAsset: Int) = {"%s%s%s__mappings__internal2baseAssetId__" + internalBaseAsset.toString()}
+func keyPriceLast(internalBasetAssetStr: String) = {"%s%s%d__price__last__" + internalBasetAssetStr}
+func keyPriceHistory(internalBasetAssetStr: String, h: Int, timestamp: Int) = {makeString(["%s%s%d%d%d__price__history", internalBasetAssetStr, h.toString(), timestamp.toString()], SEP)}
+func keyTotalLocked(internalBasetAssetStr: String) = {"%s%s%d__total__locked__" + internalBasetAssetStr}
+func keyTotalLockedByUser(internalBaseAssetStr: String, userAddressStr: String) = {makeString(["%s%s%d%s__total__locked", internalBaseAssetStr, userAddressStr], SEP)}
+func keyMappingsInternal2baseAssetId(internalBaseAsset: Int) = {"%s%s%d__mappings__internal2baseAssetId__" + internalBaseAsset.toString()}
 func keyMappingsBaseAsset2internalId(baseAssetStr: String) = {"%s%s%s__mappings__baseAsset2internalId__" + baseAssetStr}
 func keyMappingsShare2baseAssetId(shareAssetStr: String) = {"%s%s%s__mappings__share2baseAssetId__" + shareAssetStr}
 func keyMappingsBaseAsset2shareId(baseAssetStr: String) = {"%s%s%s__mappings__baseAsset2shareId__" + baseAssetStr}
@@ -32,7 +32,7 @@ let IdxCfgGetDelayBlocks                      = 5
 
 func dataAssetCfg(shareAssetStr: String, internalBaseAssetStr: String, decimalsMultBothAssets: Int,
                   decimalsMultPrice: Int, getDelayInBlocks: Int) = {
-  makeString(["%s%s%d%d%d",
+  makeString(["%s%d%d%d%d",
           shareAssetStr,                      # 1
           internalBaseAssetStr,               # 2
           decimalsMultBothAssets.toString(),  # 3
@@ -62,7 +62,7 @@ func readTotalLocked(key: String) = {
 }
 
 func keyOperation(operationType: String, internalBaseAssetStr: String, userAddress: String, txId: String) = {
-  makeString(["%s%s%s%s", operationType, internalBaseAssetStr, userAddress, txId], SEP)
+  makeString(["%s%d%s%s", operationType, internalBaseAssetStr, userAddress, txId], SEP)
 }
 
 let IdxOperStatus                   = 1
