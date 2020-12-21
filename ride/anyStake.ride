@@ -293,7 +293,7 @@ func executeGetRequest(baseAssetStr: String, userAddressStr: String, getTxIdStr:
   let outBaseAmount     = operationArray[IdxOperOutAmount].parseIntValue()
 
   if (status != "PENDING") then failExecuteGet("Status is not PENDING", baseAssetStr, userAddressStr, getTxIdStr) else
-  if (height > endHeight) then failExecuteGet("EndHeight[" + endHeight.toString() + "] > " + height.toString(), baseAssetStr, userAddressStr, getTxIdStr) else
+  if (height < endHeight) then failExecuteGet("EndHeight[" + endHeight.toString() + "] > " + height.toString(), baseAssetStr, userAddressStr, getTxIdStr) else
 
   [
   ScriptTransfer(userAddress, outBaseAmount, baseAssetId),
