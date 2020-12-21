@@ -140,17 +140,21 @@ func decrementTotalLocked(key: String, shareAssetAmount: Int, baseAssetAmount: I
         dataArray[IdxTotalLockedBase] - baseAssetAmount))
 }
 
-func calcPrice(internalBaseAssetStr: String, baseAssetId: ByteVector, shareAssetId: ByteVector, decimalsMultBothAssets: Int, decimalsMultPrice: Int) = {
+func genericCalcPrice(internalBaseAssetStr: String, baseAssetId: ByteVector, topUpBaseAmount: Int, shareAssetId: ByteVector, decimalsMultBothAssets: Int, decimalsMultPrice: Int) = {
   let totalLockedArray = readTotalLocked(keyTotalLocked(internalBaseAssetStr))
   let totalLockedBaseAmount = totalLockedArray[IdxTotalLockedBase]
   let baseAssetBalance = this.assetBalance(baseAssetId)
   # share tokens are burned immediately in submitGetRequest opeartion, so we NEED TO EXTRACT locked base tokens
-  let baseAssetBalanceConsideringLock = baseAssetBalance - totalLockedBaseAmount
+  let baseAssetBalanceConsideringLock = baseAssetBalance - totalLockedBaseAmount + topUpBaseAmount
   if (baseAssetBalanceConsideringLock < 0) then throw("baseAssetBalanceConsideringLock < 0: baseAssetBalance=" + baseAssetBalance.toString() + " baseAssetBalanceConsideringLock=" + baseAssetBalanceConsideringLock.toString()) else
   let shareEmission = assetInfo(shareAssetId).value().quantity
   # TODO consider to ROUNDUP
   let price = if (shareEmission == 0) then 1 * decimalsMultPrice else fraction(baseAssetBalanceConsideringLock, decimalsMultPrice, shareEmission)
   (price, baseAssetBalance, totalLockedBaseAmount, baseAssetBalanceConsideringLock, shareEmission)
+}
+
+func calcPrice(internalBaseAssetStr: String, baseAssetId: ByteVector, shareAssetId: ByteVector, decimalsMultBothAssets: Int, decimalsMultPrice: Int) = {
+  genericCalcPrice(internalBaseAssetStr, baseAssetId, 0, shareAssetId, decimalsMultBothAssets, decimalsMultPrice)
 }
 
 func privateCurrentSysParamsREST(baseAssetStr: String) = {
@@ -317,7 +321,8 @@ func topUpBalance(baseAssetStr: String) = {
   let internalBaseAssetStr = assetCfgArray[IdxCfgInternalBaseAsset]
 
   if (baseAssetStr != pmtAssetStr) then throw("attached payment's asset id is NOT matched passed baseAssetStr") else
-  let price = calcPrice(internalBaseAssetStr, pmtAssetId, shareAssetId, decimalsMultBothAssets, decimalsMultPrice)._1
+  if (i.payments.size() > 1) then throw("only one payment can be attached") else
+  let price = genericCalcPrice(internalBaseAssetStr, pmtAssetId, pmt.amount, shareAssetId, decimalsMultBothAssets, decimalsMultPrice)._1
   [
   IntegerEntry(keyPriceLast(internalBaseAssetStr), price),
   IntegerEntry(keyPriceHistory(internalBaseAssetStr, height, lastBlock.timestamp), price)
