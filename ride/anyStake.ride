@@ -181,12 +181,13 @@ func privateCurrentSysParamsREST(baseAssetStr: String) = {
 }
 
 @Callable(i)
-func adminRegisterAsset(baseAssetStr: String, shareAssetName: String, shareAssetDescr: String) = {
+func adminRegisterAsset(baseAssetStr: String, shareAssetName: String, shareAssetDescr: String, getDelayinBlocks: Int) = {
   let baseAssetId = baseAssetStr.fromBase58String()
   let decimals = assetInfo(baseAssetId).value().decimals
   # TODO validate that BaseToken has not been specified before
   # validate admin public key - in our case contract PK
   if (i.caller != this) then throw("permissions denied") else
+  if (getDelayinBlocks < 0) then throw("invalid getDelayinBlocks=" + getDelayinBlocks.toString()) else
   let shareAssetIssueAction = Issue(shareAssetName, shareAssetDescr, 1, decimals, true)
   let shareAssetId = shareAssetIssueAction.calculateAssetId()
   let shareAssetStr = shareAssetId.toBase58String()
@@ -201,7 +202,7 @@ func adminRegisterAsset(baseAssetStr: String, shareAssetName: String, shareAsset
                   internalBaseAssetStr,
                   decimalsMultBothAssets,
                   decimalsMultPrice,
-                  1440)), # TODO
+                  getDelayinBlocks)),
   StringEntry(keyMappingsInternal2baseAssetId(internalBaseAssettId), baseAssetStr),
   StringEntry(keyMappingsBaseAsset2internalId(baseAssetStr), internalBaseAssetStr),
   StringEntry(keyMappingsShare2baseAssetId(shareAssetStr), baseAssetStr),
