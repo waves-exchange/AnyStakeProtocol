@@ -1,7 +1,7 @@
 # AnyStakeProtocol
 
 ## Testnet Contract
-[3MxbLiDcxhjARQZ37Ec3PcoXWMcBgYV1tBh](https://testnet.wavesexplorer.com/address/3MxbLiDcxhjARQZ37Ec3PcoXWMcBgYV1tBh/tx)
+[3NBbBmwCBEnjV8jGCLmHHK35BGxN2gfJdjr](https://testnet.wavesexplorer.com/address/3NBbBmwCBEnjV8jGCLmHHK35BGxN2gfJdjr/tx)
 
 ## Contract Data State Specification
 ### Internal Asset Id
