@@ -1,5 +1,8 @@
 # AnyStakeProtocol
 
+## Mainnet Contract
+[3P3xmGBJP1onVsNXLDkGuHpk8BzNkXNuww9](https://wavesexplorer.com/address/3P3xmGBJP1onVsNXLDkGuHpk8BzNkXNuww9/tx)
+
 ## Testnet Contract
 [3NBbBmwCBEnjV8jGCLmHHK35BGxN2gfJdjr](https://testnet.wavesexplorer.com/address/3NBbBmwCBEnjV8jGCLmHHK35BGxN2gfJdjr/tx)
 
