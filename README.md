@@ -1,8 +1,8 @@
 # AnyStakeProtocol
 
 ## Mainnet Contract
-Dapp: [3P6SFR9ZZwKHZw5mMDZxpXHEhg1CXjBb51y](https://wavesexplorer.com/address/3P6SFR9ZZwKHZw5mMDZxpXHEhg1CXjBb51y/tx)
-LP token id: [9AT2kEi8C4AYxV1qKxtQTVpD5i54jCPvaNNRP6VzRtYZ](https://wavesexplorer.com/assets/9AT2kEi8C4AYxV1qKxtQTVpD5i54jCPvaNNRP6VzRtYZ)
+* Dapp: [3P6SFR9ZZwKHZw5mMDZxpXHEhg1CXjBb51y](https://wavesexplorer.com/address/3P6SFR9ZZwKHZw5mMDZxpXHEhg1CXjBb51y/tx)
+* LP token id: [9AT2kEi8C4AYxV1qKxtQTVpD5i54jCPvaNNRP6VzRtYZ](https://wavesexplorer.com/assets/9AT2kEi8C4AYxV1qKxtQTVpD5i54jCPvaNNRP6VzRtYZ)
 
 
 ## Testnet Contract
