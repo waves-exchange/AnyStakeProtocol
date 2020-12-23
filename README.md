@@ -55,4 +55,4 @@ Num| Key           | Type        | Optional? | Format | Description |
 4|`%s%s%d__total__locked__${internalBaseAssetId}`|String|NO|`%d%d__${sharedTokenAmount}__${baseTokenAmount}`||
 5|`%s%s%d%d%d__price__history__${intrenalBaseAssetId}__${height}__${timestamp}`|Integer|YES|Simple|It is difficult to use ${decimalsMult} from asset config because assets with 0 decimals will have bad price (300/200=1.5 ~ 1) ${decimalsMultPrice} has been introduce to resolve this problem|
 6|`%s%s%d__price__last__${internalBaseAssetId}`|Integer|NO|Simple||
-7|`%s%s%d__isBlocked__put__${internalBaseAssetId}`|Boolean|Yes|Simple||
+7|`%s%s%d__shutdown__put__${internalBaseAssetId}`|Boolean|Yes|Simple. If true then put operation is blocked||
