@@ -6,7 +6,7 @@
 
 
 ## Testnet Contract
-[3NBbBmwCBEnjV8jGCLmHHK35BGxN2gfJdjr](https://testnet.wavesexplorer.com/address/3NBbBmwCBEnjV8jGCLmHHK35BGxN2gfJdjr/tx)
+[3NCwprtpvXak4t4qM7fonVgmNx2x3VxPPzG](https://testnet.wavesexplorer.com/address/3NCwprtpvXak4t4qM7fonVgmNx2x3VxPPzG/tx)
 
 ## Contract Data State Specification
 ### Internal Asset Id
