@@ -5,6 +5,7 @@
 let SEP = "__"
 
 func getStringOrFail(key: String) = {this.getString(key).valueOrErrorMessage("No data for this.key=" + key)}
+func getBooleanOrFail(key: String) = {this.getBoolean(key).valueOrErrorMessage("No data for this.key=" + key)}
 
 func failExecuteGet(msg: String, baseAssetStr: String, userAddressStr: String, getTxIdStr: String) = {
   throw(msg + ": baseAssetStr=" + baseAssetStr + " userAddressStr=" + userAddressStr + " getTxIdStr=" + getTxIdStr)
@@ -22,7 +23,8 @@ func keyMappingsInternal2baseAssetId(internalBaseAsset: Int) = {"%s%s%d__mapping
 func keyMappingsBaseAsset2internalId(baseAssetStr: String) = {"%s%s%s__mappings__baseAsset2internalId__" + baseAssetStr}
 func keyMappingsShare2baseAssetId(shareAssetStr: String) = {"%s%s%s__mappings__share2baseAssetId__" + shareAssetStr}
 func keyMappingsBaseAsset2shareId(baseAssetStr: String) = {"%s%s%s__mappings__baseAsset2shareId__" + baseAssetStr}
-
+func keyShutdownPutOperation(internalBaseAssetStr: String) = {"%s%s%d__shutdown__put__" + internalBaseAssetStr}
+func keyShutdownManager(internalBaseAssetStr: String) = {"%s%s%d__shutdown__manager__" + internalBaseAssetStr}
 
 let IdxCfgShareAssetId                        = 1
 let IdxCfgInternalBaseAsset                   = 2
@@ -181,18 +183,21 @@ func privateCurrentSysParamsREST(baseAssetStr: String) = {
 }
 
 @Callable(i)
-func adminRegisterAsset(baseAssetStr: String, shareAssetName: String, shareAssetDescr: String, getDelayinBlocks: Int) = {
+func adminRegisterAsset(baseAssetStr: String, shareAssetName: String, shareAssetDescr: String, getDelayinBlocks: Int,
+                        shutdownManagerAddress: String) = {
   let baseAssetId = baseAssetStr.fromBase58String()
   let decimals = assetInfo(baseAssetId).value().decimals
   # TODO validate that BaseToken has not been specified before
   # validate admin public key - in our case contract PK
   if (i.caller != this) then throw("permissions denied") else
+  if (addressFromStringValue(shutdownManagerAddress).toString() != shutdownManagerAddress) then throw("invalid shutdownManagerAddress") else
   if (getDelayinBlocks < 0) then throw("invalid getDelayinBlocks=" + getDelayinBlocks.toString()) else
   let shareAssetIssueAction = Issue(shareAssetName, shareAssetDescr, 1, decimals, true)
   let shareAssetId = shareAssetIssueAction.calculateAssetId()
   let shareAssetStr = shareAssetId.toBase58String()
   let decimalsMultPrice = 100 * 1000 * 1000 # 10^8
   let decimalsMultBothAssets = pow(10, 0, decimals, 0, 0, DOWN)
+  let startPrice = 1 * decimalsMultPrice
 
   let internalBaseAssettId = this.getInteger(keyNextInternalAssetId()).valueOrElse(0)
   let internalBaseAssetStr = internalBaseAssettId.toString()
@@ -207,10 +212,25 @@ func adminRegisterAsset(baseAssetStr: String, shareAssetName: String, shareAsset
   StringEntry(keyMappingsBaseAsset2internalId(baseAssetStr), internalBaseAssetStr),
   StringEntry(keyMappingsShare2baseAssetId(shareAssetStr), baseAssetStr),
   StringEntry(keyMappingsBaseAsset2shareId(baseAssetStr), shareAssetStr),
+  BooleanEntry(keyShutdownPutOperation(internalBaseAssetStr), false),
+  StringEntry(keyShutdownManager(internalBaseAssetStr), shutdownManagerAddress),
   IntegerEntry(keyNextInternalAssetId(), internalBaseAssettId + 1),
+  IntegerEntry(keyPriceLast(internalBaseAssetStr), startPrice),
+  IntegerEntry(keyPriceHistory(internalBaseAssetStr, height, lastBlock.timestamp), startPrice),
   shareAssetIssueAction,
   Burn(shareAssetId, 1)
   ]
+}
+
+@Callable(i)
+func shutdownPut(internalBaseAssetId: Int) = {
+  let internalBaseAssetIdStr = internalBaseAssetId.toString()
+  let baseAssetIdStr = getStringOrFail(keyMappingsInternal2baseAssetId(internalBaseAssetId))
+  let shutdownManagerAddress = getStringOrFail(keyShutdownManager(internalBaseAssetIdStr))
+  if (baseAssetIdStr.size() < 1) then throw("invalid internalBaseAssetId") else
+  if (i.caller.toString() != shutdownManagerAddress) then throw("access denied") else
+
+  [BooleanEntry(keyShutdownPutOperation(internalBaseAssetId.toString()), true)]
 }
 
 @Callable(i)
@@ -227,7 +247,8 @@ func put() = {
   let decimalsMultPrice = cfgArray[IdxCfgDecimalsMultPrice].parseIntValue()
   let internalBaseAssetStr = cfgArray[IdxCfgInternalBaseAsset]
 
-  # TODO Validation
+  let isPutBlocked = getBooleanOrFail(keyShutdownPutOperation(internalBaseAssetStr))
+  if (isPutBlocked) then throw("put operation is blocked") else
 
   let price = calcPrice(internalBaseAssetStr, baseAssetId, shareAssetId, decimalsMultBothAssets, decimalsMultPrice)._1
   let shareAssetAmount = fraction(pmt.amount, decimalsMultPrice, price)
