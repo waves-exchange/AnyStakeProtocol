@@ -2,7 +2,8 @@
 
 ## Mainnet Contract
 * Dapp: [3P6SFR9ZZwKHZw5mMDZxpXHEhg1CXjBb51y](https://wavesexplorer.com/address/3P6SFR9ZZwKHZw5mMDZxpXHEhg1CXjBb51y/tx)
-* LP token id: [9AT2kEi8C4AYxV1qKxtQTVpD5i54jCPvaNNRP6VzRtYZ](https://wavesexplorer.com/assets/9AT2kEi8C4AYxV1qKxtQTVpD5i54jCPvaNNRP6VzRtYZ)
+* USDTLP token id: [9AT2kEi8C4AYxV1qKxtQTVpD5i54jCPvaNNRP6VzRtYZ](https://wavesexplorer.com/assets/9AT2kEi8C4AYxV1qKxtQTVpD5i54jCPvaNNRP6VzRtYZ)
+* USDCLP token id: [CrjhbC9gRezwvBZ1XwPQqRwx4BWzoyMHGFNUVdn22ep6](https://wavesexplorer.com/assets/CrjhbC9gRezwvBZ1XwPQqRwx4BWzoyMHGFNUVdn22ep6)
 
 
 ## Testnet Contract
