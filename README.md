@@ -2,9 +2,9 @@
 
 ## Mainnet Contract
 * Dapp: `3P6SFR9ZZwKHZw5mMDZxpXHEhg1CXjBb51y` [wavesexplorer](https://wavesexplorer.com/address/3P6SFR9ZZwKHZw5mMDZxpXHEhg1CXjBb51y/tx) OR [w8io](https://w8io.ru/3P6SFR9ZZwKHZw5mMDZxpXHEhg1CXjBb51y)
-* USDTLP token id: `9AT2kEi8C4AYxV1qKxtQTVpD5i54jCPvaNNRP6VzRtYZ` [wavesexplorer](https://wavesexplorer.com/assets/9AT2kEi8C4AYxV1qKxtQTVpD5i54jCPvaNNRP6VzRtYZ) OR  [w8io](https://w8io.ru/9AT2kEi8C4AYxV1qKxtQTVpD5i54jCPvaNNRP6VzRtYZ)
-* USDCLP token id: `CrjhbC9gRezwvBZ1XwPQqRwx4BWzoyMHGFNUVdn22ep6` [wavesexplorer](https://wavesexplorer.com/assets/CrjhbC9gRezwvBZ1XwPQqRwx4BWzoyMHGFNUVdn22ep6) OR  [w8io](https://w8io.ru/CrjhbC9gRezwvBZ1XwPQqRwx4BWzoyMHGFNUVdn22ep6)
-* BTCLP token id: `DazN41oAedqwGZ8aabf4nJQwJNZhsEgPH3YQWDtPsdeV` [wavesexplorer](https://wavesexplorer.com/assets/DazN41oAedqwGZ8aabf4nJQwJNZhsEgPH3YQWDtPsdeV) OR  [w8io](https://w8io.ru/DazN41oAedqwGZ8aabf4nJQwJNZhsEgPH3YQWDtPsdeV)
+  * USDTLP token id: `9AT2kEi8C4AYxV1qKxtQTVpD5i54jCPvaNNRP6VzRtYZ` [wavesexplorer](https://wavesexplorer.com/assets/9AT2kEi8C4AYxV1qKxtQTVpD5i54jCPvaNNRP6VzRtYZ) OR  [w8io](https://w8io.ru/9AT2kEi8C4AYxV1qKxtQTVpD5i54jCPvaNNRP6VzRtYZ)
+  * USDCLP token id: `CrjhbC9gRezwvBZ1XwPQqRwx4BWzoyMHGFNUVdn22ep6` [wavesexplorer](https://wavesexplorer.com/assets/CrjhbC9gRezwvBZ1XwPQqRwx4BWzoyMHGFNUVdn22ep6) OR  [w8io](https://w8io.ru/CrjhbC9gRezwvBZ1XwPQqRwx4BWzoyMHGFNUVdn22ep6)
+  * BTCLP token id: `DazN41oAedqwGZ8aabf4nJQwJNZhsEgPH3YQWDtPsdeV` [wavesexplorer](https://wavesexplorer.com/assets/DazN41oAedqwGZ8aabf4nJQwJNZhsEgPH3YQWDtPsdeV) OR  [w8io](https://w8io.ru/DazN41oAedqwGZ8aabf4nJQwJNZhsEgPH3YQWDtPsdeV)
 
 
 ## Testnet Contract
