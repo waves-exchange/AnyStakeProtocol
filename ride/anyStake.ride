@@ -16,6 +16,7 @@ func keyAssetCfg(baseAssetStr: String) = {"%s%s%s__config__asset__" + baseAssetS
 
 func keyNextInternalAssetId() = {"%s__nextInternalAssetId"}
 func keyPriceLast(internalBasetAssetStr: String) = {"%s%s%d__price__last__" + internalBasetAssetStr}
+func keyTopUpLastHeight(internalBasetAssetStr: String, sender: String) = {makeString(["%s%s%s%d__topup__last__height", internalBasetAssetStr, sender], SEP)}
 func keyPriceHistory(internalBasetAssetStr: String, h: Int, timestamp: Int) = {makeString(["%s%s%d%d%d__price__history", internalBasetAssetStr, h.toString(), timestamp.toString()], SEP)}
 func keyTotalLocked(internalBasetAssetStr: String) = {"%s%s%d__total__locked__" + internalBasetAssetStr}
 func keyTotalLockedByUser(internalBaseAssetStr: String, userAddressStr: String) = {makeString(["%s%s%d%s__total__locked", internalBaseAssetStr, userAddressStr], SEP)}
@@ -341,13 +342,17 @@ func topUpBalance(baseAssetStr: String) = {
   let decimalsMultBothAssets = assetCfgArray[IdxCfgDecimalsMultBothAssets].parseIntValue()
   let decimalsMultPrice = assetCfgArray[IdxCfgDecimalsMultPrice].parseIntValue()
   let internalBaseAssetStr = assetCfgArray[IdxCfgInternalBaseAsset]
+  let topUpLastHeightKEY = keyTopUpLastHeight(internalBaseAssetStr, i.caller.toString())
+  let topUpLastHeight = this.getInteger(topUpLastHeightKEY).valueOrElse(0)
 
   if (baseAssetStr != pmtAssetStr) then throw("attached payment's asset id is NOT matched passed baseAssetStr") else
   if (i.payments.size() > 1) then throw("only one payment can be attached") else
+  if (height - topUpLastHeight < 100) then throw("1 topUp per 100 blocks from the same address is allowed") else
   let price = genericCalcPrice(internalBaseAssetStr, pmtAssetId, pmt.amount, shareAssetId, decimalsMultBothAssets, decimalsMultPrice)._1
   [
   IntegerEntry(keyPriceLast(internalBaseAssetStr), price),
-  IntegerEntry(keyPriceHistory(internalBaseAssetStr, height, lastBlock.timestamp), price)
+  IntegerEntry(keyPriceHistory(internalBaseAssetStr, height, lastBlock.timestamp), price),
+  IntegerEntry(topUpLastHeightKEY, height)
   ]
 }
 
