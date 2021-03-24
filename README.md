@@ -46,35 +46,32 @@ Num| Key           | Type        | Optional? | Format and Description |
 1  | `%s%s%d__mappings__internal2baseAssetId__${internalBaseAssetId}`|String|No|Simple|
 2  | `%s%s%s__mappings__baseAsset2internalId__${baseAssetId}`|String|No|Simple|
 
-#### Config Data State
-Version_#0001
+#### Config Data State V_01
 
 Type | Format   |
 ---- | ---- |
 Key  | `%s%s%s__config__asset__${realBaseAssetId}` |
-Value| `%s%d%d%d%d__${shareAssetId}__${internalBaseAssetId}__${decimalsMultBothTokens}__${decimalsMultPrice}__${getDelayBlocks}__...extensions...` |
+Value| `%s%d%d%d%d__${shareAssetId}__${internalBaseAssetId}__${decimalsMultBothTokens}__${decimalsMultPrice}__${getDelayBlocks}__...dataExtensions...` |
 
-#### submitPut operation
-Version_#0001
+#### submitPut operation V_01
 
 Type | Format   |
 ---- | ---- |
 Key  | `%s%d%s%s__P__${internalBaseAssetId}__${userAddress}__${txId}` |
-Value| `%s%d%d%d%d%d%d%d__${status}__${inBaseTokensAmount}__${price}__${outShareTokensAmount}__${startHeight}__${startTimestamp}__${endHeight}__${endTimestamp}` |
+Value| `%s%d%d%d%d%d%d%d__${status}__${inBaseTokensAmount}__${price}__${outShareTokensAmount}__${startHeight}__${startTimestamp}__${endHeight}__${endTimestamp}...dataExtensions...` |
 
 Known Implementations:
 * [LP submitPut](#lp-put)
 * [Algo submitPut](#algo-put)
 
-#### submitGet operation
-Version_#0001
+#### submitGet operation V_01
 
 Type | Format   |
 ---- | ---- |
 Key  | `%s%d%s%s__G__${internalBaseAssetId}__${userAddress}__${txId}` |
-Value| `%s%d%d%d%d%d%d%d__${status}__${inShareTokensAmount}__${price}__${outBaseTokensAmount}__${startHeight}__${startTimestamp}__${endHeight}__${endTimestamp}` |
+Value| `%s%d%d%d%d%d%d%d__${status}__${inShareTokensAmount}__${price}__${outBaseTokensAmount}__${startHeight}__${startTimestamp}__${endHeight}__${endTimestamp}...dataExtensions...` |
 
-#### Other information in state
+#### Other information
 Num| Key           | Type        | Optional? | Format | Description |
 ---| ------------- |------------ |---------- | -------| ------------|
 1|`%s%s%s__mappings__share2baseAssetId__${shareAssetId}`|String|NO|Simple|mapping between ${shareAssetId} and real ${baseAssetId}|
@@ -89,9 +86,10 @@ Num| Key           | Type        | Optional? | Format | Description |
 ## LP Product Implementation
 
 #### LP PUT
-[AnyStake submitPut](#submitput-operation)
-
-It is always one step operation. (No need to send claim/execute/withdraw by user)
+##### Data State Extensions
+No extensions, see [submitPut V_01](#submitput-operation-v_01)
+##### Assumptions
+* one step operation (No need to send claim/execute/withdraw by user)
 * ${status} - always FINISHED
 * ${startHeight} == ${endHeight}
 * ${startTimestamp} == ${endTimestamp}
@@ -108,4 +106,17 @@ It is always one step operation. (No need to send claim/execute/withdraw by user
 
 ## Algo Product Implementation
 #### Algo PUT
-[AnyStake submitPut](#submitput-operation)
+
+##### Data State Extensions
+Type | Format   |
+---- | ---- |
+Key  | [submitPut V_01](#submitput-operation-v_01).key |
+Value| [submitPut V_01](#submitput-operation-v_01).val`__${topUpIdxUnlock}` |
+
+##### Assumptions
+* two step operation
+* the following data is available only after corresponding `executeXxx` call
+   * `${endHeight}`
+   * `${endTimestamp}`
+   * `${price}`
+   * `${${outShareTokensAmount}
