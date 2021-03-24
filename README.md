@@ -61,8 +61,8 @@ Key  | `%s%d%s%s__P__${internalBaseAssetId}__${userAddress}__${txId}` |
 Value| `%s%d%d%d%d%d%d%d__${status}__${inBaseTokensAmount}__${price}__${outShareTokensAmount}__${startHeight}__${startTimestamp}__${endHeight}__${endTimestamp}...dataExtensions...` |
 
 Known Implementations:
-* [LP submitPut](#lp-put)
-* [Algo submitPut](#algo-put)
+* [LP submitPut](#lp-submitput-and-submitget)
+* [ALGO submitPut](#algo-submitput)
 
 #### submitGet operation V_01
 
@@ -70,6 +70,10 @@ Type | Format   |
 ---- | ---- |
 Key  | `%s%d%s%s__G__${internalBaseAssetId}__${userAddress}__${txId}` |
 Value| `%s%d%d%d%d%d%d%d__${status}__${inShareTokensAmount}__${price}__${outBaseTokensAmount}__${startHeight}__${startTimestamp}__${endHeight}__${endTimestamp}...dataExtensions...` |
+
+Known Implementations:
+* [LP submitGet](#lp-submitput-and-submitget)
+* [ALGO submitGet](#algo-submitget)
 
 #### Other information
 Num| Key           | Type        | Optional? | Format | Description |
@@ -85,11 +89,14 @@ Num| Key           | Type        | Optional? | Format | Description |
 
 ## LP Product Implementation
 
-#### LP PUT
-##### Data State Extensions
-No extensions, see [submitPut V_01](#submitput-operation-v_01)
-##### Assumptions
-* one step operation (No need to send claim/execute/withdraw by user)
+### LP submitPut and submitGet
+#### Data State Extensions
+No extensions, see corresponding
+* [submitPut V_01](#submitput-operation-v_01)
+* [submitGet V_01](#submitget-operation-v_01)
+
+#### Assumptions
+* both one step operations (No need to send claim/execute/withdraw by user)
 * ${status} - always FINISHED
 * ${startHeight} == ${endHeight}
 * ${startTimestamp} == ${endTimestamp}
@@ -104,19 +111,37 @@ No extensions, see [submitPut V_01](#submitput-operation-v_01)
 #### Testnet Contract
 * [3Mzt645zA6u2QG6jRPoo6H6CK89kVggFgNi](https://testnet.wavesexplorer.com/address/3Mzt645zA6u2QG6jRPoo6H6CK89kVggFgNi/tx)
 
-## Algo Product Implementation
-#### Algo PUT
 
-##### Data State Extensions
+
+## ALGO Product Implementation
+### ALGO submitPut
+
+#### Data State Extensions
 Type | Format   |
 ---- | ---- |
 Key  | [submitPut V_01](#submitput-operation-v_01).key |
 Value| [submitPut V_01](#submitput-operation-v_01).val`__${topUpIdxUnlock}` |
 
-##### Assumptions
+#### Assumptions
 * two step operation
 * the following data is available only after corresponding `executeXxx` call
    * `${endHeight}`
    * `${endTimestamp}`
    * `${price}`
-   * `${${outShareTokensAmount}
+   * `${outShareTokensAmount}`
+
+### ALGO submitGet
+
+#### Data State Extensions
+Type | Format   |
+---- | ---- |
+Key  | [submitGet V_01](#submitget-operation-v_01).key |
+Value| [submitGet V_01](#submitget-operation-v_01).val`__${topUpIdxUnlock}` |
+
+#### Assumptions
+* two step operation
+* the following data is available only after corresponding `executeXxx` call
+   * `${endHeight}`
+   * `${endTimestamp}`
+   * `${price}`
+   * `${outBaseTokensAmount}`
