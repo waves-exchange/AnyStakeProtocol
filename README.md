@@ -46,12 +46,15 @@ Num| Key           | Type        | Optional? | Format and Description |
 1  | `%s%s%d__mappings__internal2baseAssetId__${internalBaseAssetId}`|String|No|Simple|
 2  | `%s%s%s__mappings__baseAsset2internalId__${baseAssetId}`|String|No|Simple|
 
-#### Config Data State V_01
+#### Config V_01
 
 Type | Format   |
 ---- | ---- |
 Key  | `%s%s%s__config__asset__${realBaseAssetId}` |
 Value| `%s%d%d%d%d__${shareAssetId}__${internalBaseAssetId}__${decimalsMultBothTokens}__${decimalsMultPrice}__${getDelayBlocks}__...dataExtensions...` |
+
+Extensions:
+* [ALGO config](#algo-config)
 
 #### submitPut operation V_01
 
@@ -60,7 +63,7 @@ Type | Format   |
 Key  | `%s%d%s%s__P__${internalBaseAssetId}__${userAddress}__${txId}` |
 Value| `%s%d%d%d%d%d%d%d__${status}__${inBaseTokensAmount}__${price}__${outShareTokensAmount}__${startHeight}__${startTimestamp}__${endHeight}__${endTimestamp}...dataExtensions...` |
 
-Known Implementations:
+Extensions:
 * [LP submitPut](#lp-submitput-and-submitget)
 * [ALGO submitPut](#algo-submitput)
 
@@ -71,7 +74,7 @@ Type | Format   |
 Key  | `%s%d%s%s__G__${internalBaseAssetId}__${userAddress}__${txId}` |
 Value| `%s%d%d%d%d%d%d%d__${status}__${inShareTokensAmount}__${price}__${outBaseTokensAmount}__${startHeight}__${startTimestamp}__${endHeight}__${endTimestamp}...dataExtensions...` |
 
-Known Implementations:
+Extensions:
 * [LP submitGet](#lp-submitput-and-submitget)
 * [ALGO submitGet](#algo-submitget)
 
@@ -114,6 +117,13 @@ No extensions, see corresponding
 
 
 ## ALGO Product Implementation
+### ALGO config
+#### Data State Extensions
+Type | Format   |
+---- | ---- |
+Key  | [Config V_01](#config-v_01).key |
+Value| [Config V_01](#config-v_01).val `__${TopupIntervalInBlocks}__${TopupMaxNegativePart}__${TopupManagerAddress}__${SubmitLimitsBaseMax}__${SubmitLimitsBaseReset}__${SubmitLimitsShareMax}__${SubmitLimitsShareReset}` |
+
 ### ALGO submitPut
 
 #### Data State Extensions
