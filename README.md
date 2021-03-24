@@ -92,6 +92,16 @@ Num| Key           | Type        | Optional? | Format | Description |
 
 ## LP Product Implementation
 
+### Mainnet Contract
+* Dapp: `3P6SFR9ZZwKHZw5mMDZxpXHEhg1CXjBb51y` [wavesexplorer](https://wavesexplorer.com/address/3P6SFR9ZZwKHZw5mMDZxpXHEhg1CXjBb51y/tx) OR [w8io](https://w8io.ru/3P6SFR9ZZwKHZw5mMDZxpXHEhg1CXjBb51y)
+  * USDTLP token id: `9AT2kEi8C4AYxV1qKxtQTVpD5i54jCPvaNNRP6VzRtYZ` [wavesexplorer](https://wavesexplorer.com/assets/9AT2kEi8C4AYxV1qKxtQTVpD5i54jCPvaNNRP6VzRtYZ) OR  [w8io](https://w8io.ru/9AT2kEi8C4AYxV1qKxtQTVpD5i54jCPvaNNRP6VzRtYZ)
+  * USDCLP token id: `CrjhbC9gRezwvBZ1XwPQqRwx4BWzoyMHGFNUVdn22ep6` [wavesexplorer](https://wavesexplorer.com/assets/CrjhbC9gRezwvBZ1XwPQqRwx4BWzoyMHGFNUVdn22ep6) OR  [w8io](https://w8io.ru/CrjhbC9gRezwvBZ1XwPQqRwx4BWzoyMHGFNUVdn22ep6)
+  * BTCLP token id: `DazN41oAedqwGZ8aabf4nJQwJNZhsEgPH3YQWDtPsdeV` [wavesexplorer](https://wavesexplorer.com/assets/DazN41oAedqwGZ8aabf4nJQwJNZhsEgPH3YQWDtPsdeV) OR  [w8io](https://w8io.ru/DazN41oAedqwGZ8aabf4nJQwJNZhsEgPH3YQWDtPsdeV)
+  * ETHLP token id: `ELzXTgPa6GGYyLtitn2oWDWQ9joyTFEueNtF4kxg95dM` [wavesexplorer](https://wavesexplorer.com/assets/ELzXTgPa6GGYyLtitn2oWDWQ9joyTFEueNtF4kxg95dM) OR  [w8io](https://w8io.ru/ELzXTgPa6GGYyLtitn2oWDWQ9joyTFEueNtF4kxg95dM)
+
+### Testnet Contract
+* [3Mzt645zA6u2QG6jRPoo6H6CK89kVggFgNi](https://testnet.wavesexplorer.com/address/3Mzt645zA6u2QG6jRPoo6H6CK89kVggFgNi/tx)
+
 ### LP submitPut and submitGet
 #### Data State Extensions
 No extensions, see corresponding
@@ -103,17 +113,6 @@ No extensions, see corresponding
 * ${status} - always FINISHED
 * ${startHeight} == ${endHeight}
 * ${startTimestamp} == ${endTimestamp}
-
-#### Mainnet Contract
-* Dapp: `3P6SFR9ZZwKHZw5mMDZxpXHEhg1CXjBb51y` [wavesexplorer](https://wavesexplorer.com/address/3P6SFR9ZZwKHZw5mMDZxpXHEhg1CXjBb51y/tx) OR [w8io](https://w8io.ru/3P6SFR9ZZwKHZw5mMDZxpXHEhg1CXjBb51y)
-  * USDTLP token id: `9AT2kEi8C4AYxV1qKxtQTVpD5i54jCPvaNNRP6VzRtYZ` [wavesexplorer](https://wavesexplorer.com/assets/9AT2kEi8C4AYxV1qKxtQTVpD5i54jCPvaNNRP6VzRtYZ) OR  [w8io](https://w8io.ru/9AT2kEi8C4AYxV1qKxtQTVpD5i54jCPvaNNRP6VzRtYZ)
-  * USDCLP token id: `CrjhbC9gRezwvBZ1XwPQqRwx4BWzoyMHGFNUVdn22ep6` [wavesexplorer](https://wavesexplorer.com/assets/CrjhbC9gRezwvBZ1XwPQqRwx4BWzoyMHGFNUVdn22ep6) OR  [w8io](https://w8io.ru/CrjhbC9gRezwvBZ1XwPQqRwx4BWzoyMHGFNUVdn22ep6)
-  * BTCLP token id: `DazN41oAedqwGZ8aabf4nJQwJNZhsEgPH3YQWDtPsdeV` [wavesexplorer](https://wavesexplorer.com/assets/DazN41oAedqwGZ8aabf4nJQwJNZhsEgPH3YQWDtPsdeV) OR  [w8io](https://w8io.ru/DazN41oAedqwGZ8aabf4nJQwJNZhsEgPH3YQWDtPsdeV)
-  * ETHLP token id: `ELzXTgPa6GGYyLtitn2oWDWQ9joyTFEueNtF4kxg95dM` [wavesexplorer](https://wavesexplorer.com/assets/ELzXTgPa6GGYyLtitn2oWDWQ9joyTFEueNtF4kxg95dM) OR  [w8io](https://w8io.ru/ELzXTgPa6GGYyLtitn2oWDWQ9joyTFEueNtF4kxg95dM)
-
-#### Testnet Contract
-* [3Mzt645zA6u2QG6jRPoo6H6CK89kVggFgNi](https://testnet.wavesexplorer.com/address/3Mzt645zA6u2QG6jRPoo6H6CK89kVggFgNi/tx)
-
 
 
 ## ALGO Product Implementation
