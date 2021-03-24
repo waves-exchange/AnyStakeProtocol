@@ -8,7 +8,34 @@ Any Stake Protocol is designed to unify callable methods and data state between 
 - [Algo Product Implementation](algo-product-implementation)
 
 ## AnyStake Interface
-
+```python
+@Callable(i)
+func adminRegisterAsset() = {}
+ 
+# payment in $baseAssetId
+@Callable(i)
+func submitPut() = {}
+ 
+# payment in $shareAssetId
+@Callable(i)
+func submitGet() = {}
+ 
+@Callable(i)
+func executePut(baseTokenStr: String, userAddressStr: String, txId: String) = {}
+ 
+@Callable(i)
+func executeGet(baseTokenStr: String, userAddressStr: String, txId: String) = {}
+ 
+# if amount > 0 then payment in $baseAssetId
+# if amount < 0 then empty payments
+# if amount = 0 then error
+@Callable(i)
+func topUpBalance(baseAssetId: String, amount: Int) = {}
+ 
+@Callable(i)
+func currentSysParamsREST(baseTokenId: String)={}
+# includes current price
+```
 
 ## AnyStake Data State Specification
 #### Internal Asset Id
@@ -59,7 +86,7 @@ Num| Key           | Type        | Optional? | Format | Description |
 ## LP Product Implementation
 
 #### PUT operation assumptions
-It is always one step operation. (No need to in claim/execute/withdraw by user)
+It is always one step operation. (No need to send claim/execute/withdraw by user)
 * ${status} - always FINISHED
 * ${startHeight} == ${endHeight}
 * ${startTimestamp} == ${endTimestamp}
