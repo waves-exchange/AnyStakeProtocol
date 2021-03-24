@@ -62,6 +62,9 @@ Type | Format   |
 Key  | `%s%d%s%s__P__${internalBaseAssetId}__${userAddress}__${txId}` |
 Value| `%s%d%d%d%d%d%d%d__${status}__${inBaseTokensAmount}__${price}__${outShareTokensAmount}__${startHeight}__${startTimestamp}__${endHeight}__${endTimestamp}` |
 
+Known Implementations:
+* [LP submitPut](#lp-put)
+* [Algo submitPut](#algo-put)
 
 #### submitGet operation
 Version_#0001
@@ -85,7 +88,9 @@ Num| Key           | Type        | Optional? | Format | Description |
 
 ## LP Product Implementation
 
-#### PUT operation assumptions
+#### LP PUT
+[AnyStake submitPut](#submitput-operation)
+
 It is always one step operation. (No need to send claim/execute/withdraw by user)
 * ${status} - always FINISHED
 * ${startHeight} == ${endHeight}
@@ -102,3 +107,5 @@ It is always one step operation. (No need to send claim/execute/withdraw by user
 * [3Mzt645zA6u2QG6jRPoo6H6CK89kVggFgNi](https://testnet.wavesexplorer.com/address/3Mzt645zA6u2QG6jRPoo6H6CK89kVggFgNi/tx)
 
 ## Algo Product Implementation
+#### Algo PUT
+[AnyStake submitPut](#submitput-operation)
