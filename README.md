@@ -4,8 +4,8 @@ Any Stake Protocol is designed to unify callable methods and data state between 
 ## Table of contents
 - [AnyStake Interface](#anystake-interface)
 - [AnyStake Data State Specification](#anystake-data-state-specification)
-- [LP Product Implementation](lp-product-implementation)
-- [Algo Product Implementation](algo-product-implementation)
+- [LP Product Implementation](#lp-product-implementation)
+- [Algo Product Implementation](#algo-product-implementation)
 
 ## AnyStake Interface
 ```python
