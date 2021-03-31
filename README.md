@@ -116,6 +116,13 @@ No extensions, see corresponding
 
 
 ## ALGO Product Implementation
+### Mainnet Contract
+* Dapp: `3PKaRXj6pBb23A8k965eEgBAhhJ4FSDKS5e` [wavesexplorer](https://wavesexplorer.com/address/3PKaRXj6pBb23A8k965eEgBAhhJ4FSDKS5e/tx) OR [w8io](https://w8io.ru/3PKaRXj6pBb23A8k965eEgBAhhJ4FSDKS5e)
+  * AUSDTLPM token id: `3iAUM9xnKdu2TWBXRqPvYoGsbiZEbDPP1okUf5v9RJNz` [wavesexplorer](https://wavesexplorer.com/assets/3iAUM9xnKdu2TWBXRqPvYoGsbiZEbDPP1okUf5v9RJNz) OR  [w8io](https://w8io.ru/3iAUM9xnKdu2TWBXRqPvYoGsbiZEbDPP1okUf5v9RJNz)
+
+
+### Testnet Contract
+* [3NC9wWawxuFG6a3sZdfckGwoMeVhLFjZFwH](https://testnet.wavesexplorer.com/address/3NC9wWawxuFG6a3sZdfckGwoMeVhLFjZFwH/tx)
 ### ALGO config
 #### Data State Extensions
 Type | Format   |
