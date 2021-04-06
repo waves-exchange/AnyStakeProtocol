@@ -66,6 +66,8 @@ func keyTopUpLastHeight(internalBasetAssetStr: String, sender: String)
     = {makeString(["%s%s%s%d%s__topup__last__height", internalBasetAssetStr, sender], SEP)}
 func keyTopupMutext(internalBasetAssetStr: String)
     = {"%s%s%d__topup__mutex__" + internalBasetAssetStr}
+func keyTopupLastTimestamp(internalBasetAssetStr: String)
+    = {"%s%s%s%d__topup__last__timestamp__" + internalBasetAssetStr}
 func keyTopupHistory(internalBasetAssetStr: String, topupIdx: Int)
     = {makeString(["%s%s%d%d__topup__history", internalBasetAssetStr, topupIdx.toString()], SEP)}
 func keyLimitsRemaining(internalBasetAssetStr: String)
@@ -426,6 +428,9 @@ func privateCurrentSysParamsREST(baseAssetStr: String) = {
   let priceLastKEY = keyPriceLast(internalBaseAssetStr)
   let priceLastVal = this.getInteger(priceLastKEY).valueOrElse(0)
 
+  let topupLastTimeKEY = keyTopupLastTimestamp(internalBaseAssetStr)
+  let topupLastTimeVal = this.getInteger(topupLastTimeKEY).valueOrElse(0)
+
   # (price, decimalsMultPrice, baseAssetBalance, -1, baseAssetBalanceWCO, shareEmission, currIterTotalInBaseAmount, currIterTotalInShareAmount, totalLockedOutBaseAmount, totalLockedOutShareAmount, decimalsMultBothAssets, priceATH)
   let sysState = calcPrice(internalBaseAssetStr, baseAssetId, shareAssetId, decimalsMultPriceVal)
 
@@ -442,7 +447,8 @@ func privateCurrentSysParamsREST(baseAssetStr: String) = {
     IntegerEntry("totalLockedOutShareAmount",       sysState._9),
     IntegerEntry("decimalsMultBothAssets",          decimalsMultBothAssetsVal),
     IntegerEntry("priceATH",                        priceAthVal),
-    IntegerEntry("priceRecalculated",               sysState._1)
+    IntegerEntry("priceRecalculated",               sysState._1),
+    IntegerEntry("topupLastTimestamp",              topupLastTimeVal)
   )
 }
 
@@ -644,6 +650,7 @@ func topUpBalance(baseAssetStr: String, income: Int) = {
     :+ TotalLockedStringEntry("DECREMENT", keyTotalLocked(internalBaseAssetStr), topupTotalDiff)
     # release mutex
     :+ TopupMutexIntEntry(internalBaseAssetStr, 0)
+    :+ IntegerEntry(keyTopupLastTimestamp(internalBaseAssetStr), lastBlock.timestamp)
     # reset limits
     :+ RemainingLimitsStringEntry(keyLimitsRemaining(internalBaseAssetStr), submitLimitsBaseMax, submitLimitsShareMax)
     :+ Burn(shareAssetId, topupTotalDiff[IdxTotalLockedInShare])
@@ -668,6 +675,7 @@ func currentSysParamsREST(baseAssetStr: String)= {
   let decimalsMultBothAssets          = sysStateTuple._11.value
   let priceATH                        = sysStateTuple._12.value
   let priceRecalculated               = sysStateTuple._13.value
+  let topupLastTime                   = sysStateTuple._14.value
 
   let restData = makeString(["startCurrentSysParamsREST",
     price.toString(),
@@ -683,6 +691,7 @@ func currentSysParamsREST(baseAssetStr: String)= {
     decimalsMultBothAssets.toString(),
     priceATH.toString(),
     priceRecalculated.toString(),
+    topupLastTime.toString(),
     "endCurrentSysParamsREST"],
   SEP)
 
