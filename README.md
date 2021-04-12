@@ -5,7 +5,8 @@ Any Stake Protocol is designed to unify callable methods and data state between 
 - [AnyStake Interface](#anystake-interface)
 - [AnyStake Data State Specification](#anystake-data-state-specification)
 - [LP Product Implementation](#lp-product-implementation)
-- [Algo Product Implementation](#algo-product-implementation)
+- [ALGO Product Implementation](#algo-product-implementation)
+- [LAMBO Product Implementation](#lambo-product-implementation)
 
 ## AnyStake Interface
 ```python
@@ -161,3 +162,22 @@ Value| [submitGet V_01](#submitget-operation-v_01).val`__${topUpIdxUnlock}` |
    * `${endTimestamp}`
    * `${price}`
    * `${outBaseTokensAmount}`
+
+## LAMBO Product Implementation
+
+### Mainnet Contract
+* Dapp: `3P3hCvE9ZfeMnZE6kXzR6YBzxhxM8J6PE7K` [wavesexplorer](https://wavesexplorer.com/address/3P3hCvE9ZfeMnZE6kXzR6YBzxhxM8J6PE7K/tx) OR [w8io](https://w8io.ru/3P3hCvE9ZfeMnZE6kXzR6YBzxhxM8J6PE7K)
+  * USDTLAMBO token id: `TBD` [wavesexplorer](https://wavesexplorer.com/assets/TBD) OR  [w8io](https://w8io.ru/TBD)
+
+### Testnet Contract
+* [3NAkRz8VVS1aizMWiZ7Hxs3N9vrfhpR6579](https://testnet.wavesexplorer.com/address/3NAkRz8VVS1aizMWiZ7Hxs3N9vrfhpR6579/tx)
+
+### LAMBO config
+same as [ALGO config](#algo-config)
+
+### LAMBO submitPut
+same as [ALGO submitPut](#algo-submitput)
+
+### LAMBO submitGet
+with one exception as [ALGO submitGet](#algo-submitget):
+* `${endHeight}` is available right away after `submitGet` and calculated as `${currentBlockchainHeight} + `[Config V_01](#config-v_01)`.${getDelayBlocks}`. It is used to block operation till this height.
