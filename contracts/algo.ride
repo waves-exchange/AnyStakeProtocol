@@ -640,6 +640,9 @@ func topUpBalance(baseAssetStr: String, income: Int) = {
   let diffTuple = calcTotalLockedDiff("topup", "", internalBaseAssetStr, price, priceMult, 0, baseAssetId, shareAssetId)
   let topupTotalDiff = diffTuple._1
 
+  let priceAthKEY = keyPriceATH(internalBaseAssetStr)
+  let prevPriceATH = this.getInteger(priceAthKEY).valueOrElse(0)
+
   [IntE(keyPriceLast(internalBaseAssetStr), price),
     IntE(keyPriceHistory(internalBaseAssetStr, height, lastBlock.timestamp), price),
     IntE(keyPriceByTopUpIdx(internalBaseAssetStr, currentTopUpIdx), price),
