@@ -4,9 +4,10 @@ Any Stake Protocol is designed to unify callable methods and data state between 
 ## Table of contents
 - [AnyStake Interface](#anystake-interface)
 - [AnyStake Data State Specification](#anystake-data-state-specification)
-- [LP Product Implementation](#lp-product-implementation)
-- [ALGO Product Implementation](#algo-product-implementation)
-- [LAMBO Product Implementation](#lambo-product-implementation)
+- Products
+    - [LP Product Implementation](#lp-product-implementation)
+    - [ALGO Product Implementation](#algo-product-implementation)
+    - [LAMBO Product Implementation](#lambo-product-implementation)
 
 ## AnyStake Interface
 ```python
@@ -180,4 +181,4 @@ same as [ALGO submitPut](#algo-submitput)
 
 ### LAMBO submitGet
 with one exception as [ALGO submitGet](#algo-submitget):
-* `${endHeight}` is available right away after `submitGet` and calculated as `${currentBlockchainHeight} + `[Config V_01](#config-v_01)`.${getDelayBlocks}`. It is used to block operation till this height.
+* `${endHeight}` is available right away after `submitGet` and calculated as `${currentBlockchainHeight} + .${getDelayBlocks}` (see [Config V_01](#config-v_01)). It is used to block operation till this height.
