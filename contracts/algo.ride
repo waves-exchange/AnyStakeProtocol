@@ -8,6 +8,9 @@ func getStringOrFail(key: String)   = {this.getString(key).valueOrErrorMessage("
 func getBooleanOrFail(key: String)  = {this.getBoolean(key).valueOrErrorMessage("No data for this.key=" + key)}
 func getIntOrFail(key: String)      = {this.getInteger(key).valueOrErrorMessage("No data for this.key=" + key)}
 
+func IntE(key: String, val: Int)    = {IntegerEntry(key, val)}
+func StrE(key: String, val: String) = {StringEntry(key, val)}
+
 func failExecuteGet(msg: String, baseAssetStr: String, userAddressStr: String, submitTxIdStr: String, operationType: String) = {
   throw(msg + ": baseAsset=" + baseAssetStr
             + " userAddress=" + userAddressStr
@@ -219,7 +222,7 @@ func TotalLockedStringEntry(action: String, key: String, diff: List[Int]) = {
 
   let dataArray = readTotalLocked(key)
 
-  StringEntry(key,
+  StrE(key,
       dataTotalLocked(
         UPDATE(dataArray[IdxTotalLockedInShare],  diff[IdxTotalLockedInShare]),
         UPDATE(dataArray[IdxTotalLockedOutBase],  diff[IdxTotalLockedOutBase]),
@@ -298,13 +301,13 @@ let IdxLimitsRemainingBase = 1
 let IdxLimitsRemainingShare = 2
 
 func RemainingLimitsStringEntry(key:String, baseRemainingLimit:Int, shareRemainingLimit:Int) = {
-  StringEntry(key,
+  StrE(key,
       makeString(["%d%d", baseRemainingLimit.toString(), shareRemainingLimit.toString()], SEP)
   )
 }
 
 func TopupMutexIntEntry(internalBaseAssetStr:String, acquiredHeight:Int) = {
-  IntegerEntry(keyTopupMutext(internalBaseAssetStr), acquiredHeight)
+  IntE(keyTopupMutext(internalBaseAssetStr), acquiredHeight)
 }
 
 func genericCalcPrice(internalBaseAssetStr: String, baseAssetId: ByteVector, topUpBaseAmount: Int, shareAssetId: ByteVector, decimalsMultPrice: Int) = {
@@ -363,7 +366,7 @@ func commonSubmit(operationType: String, i: Invocation, inAmount: Int, inAssetId
   if (limitsRemainingBaseNew < 0 || limitsRemainingShareNew < 0) then failSubmitLimitsExceeds(limitsRemainingBase, limitsRemainingShare, limitsRemainingBaseNew, limitsRemainingShareNew) else
 
   let topUpCurrentIdx = getIntOrFail(keyTopUpCurrentIdx(internalBaseAssetStr))
-  [StringEntry(
+  [StrE(
       keyOperation(operationType, internalBaseAssetStr, userAddressStr, i.transactionId.toBase58String()),
       dataOperation("PENDING", inAmount, 0, 0, height, lastBlock.timestamp, 0, 0, topUpCurrentIdx + 1))
   ]
@@ -382,13 +385,13 @@ func commonExecute(operationType: String, baseAssetStr: String, userAddressStr: 
 
   let baseAssetId = baseAssetStr.fromBase58String()
 
-  let operationKey = keyOperation(operationType, internalBaseAssetStr, userAddressStr, submitTxIdStr)
-  let operationArray = getStringOrFail(operationKey)
+  let opKey = keyOperation(operationType, internalBaseAssetStr, userAddressStr, submitTxIdStr)
+  let opArray = getStringOrFail(opKey)
     .split(SEP)
 
-  let status            = operationArray[IdxOperStatus]
-  let inAmount          = operationArray[IdxOperInAmount].parseIntValue()
-  let topupUnlockIdx    = operationArray[IdxOperTopupUnlockIdx].parseIntValue()
+  let status            = opArray[IdxOperStatus]
+  let inAmount          = opArray[IdxOperInAmount].parseIntValue()
+  let topupUnlockIdx    = opArray[IdxOperTopupUnlockIdx].parseIntValue()
   let currTopUpIdx      = getIntOrFail(keyTopUpCurrentIdx(internalBaseAssetStr))
   let priceByTopUpId    = getIntOrFail(keyPriceByTopUpIdx(internalBaseAssetStr, topupUnlockIdx))
 
@@ -404,8 +407,8 @@ func commonExecute(operationType: String, baseAssetStr: String, userAddressStr: 
     else [ScriptTransfer(userAddress, outAmount, shareAssetId)]
 
   outTransferData
-    :+ StringEntry(operationKey,
-                 dataOperationExecutionUpdate(operationArray, "FINISHED", priceByTopUpId, outAmount))
+    :+ StrE(opKey,
+            dataOperationExecutionUpdate(opArray, "FINISHED", priceByTopUpId, outAmount))
     :+ TotalLockedStringEntry("DECREMENT", keyTotalLocked(internalBaseAssetStr), diffTuple._1)
     :+ TotalLockedStringEntry("DECREMENT", keyTotalLockedByUser(internalBaseAssetStr, userAddressStr), diffTuple._2)
 }
@@ -435,20 +438,20 @@ func privateCurrentSysParamsREST(baseAssetStr: String) = {
   let sysState = calcPrice(internalBaseAssetStr, baseAssetId, shareAssetId, decimalsMultPriceVal)
 
   (
-    IntegerEntry("price",                           priceLastVal),
-    IntegerEntry("decimalsMultPrice",               decimalsMultPriceVal),
-    IntegerEntry("baseAssetBalance",                sysState._2),
-    IntegerEntry("-1",                              sysState._3),
-    IntegerEntry("baseAssetBalanceWCO",             sysState._4),
-    IntegerEntry("shareEmission",                   sysState._5),
-    IntegerEntry("currIterTotalInBaseAmount",       sysState._6),
-    IntegerEntry("currIterTotalInShareAmount",      sysState._7),
-    IntegerEntry("totalLockedOutBaseAmount",        sysState._8),
-    IntegerEntry("totalLockedOutShareAmount",       sysState._9),
-    IntegerEntry("decimalsMultBothAssets",          decimalsMultBothAssetsVal),
-    IntegerEntry("priceATH",                        priceAthVal),
-    IntegerEntry("priceRecalculated",               sysState._1),
-    IntegerEntry("topupLastTimestamp",              topupLastTimeVal)
+    IntE("price",                           priceLastVal),
+    IntE("decimalsMultPrice",               decimalsMultPriceVal),
+    IntE("baseAssetBalance",                sysState._2),
+    IntE("-1",                              sysState._3),
+    IntE("baseAssetBalanceWCO",             sysState._4),
+    IntE("shareEmission",                   sysState._5),
+    IntE("currIterTotalInBaseAmount",       sysState._6),
+    IntE("currIterTotalInShareAmount",      sysState._7),
+    IntE("totalLockedOutBaseAmount",        sysState._8),
+    IntE("totalLockedOutShareAmount",       sysState._9),
+    IntE("decimalsMultBothAssets",          decimalsMultBothAssetsVal),
+    IntE("priceATH",                        priceAthVal),
+    IntE("priceRecalculated",               sysState._1),
+    IntE("topupLastTimestamp",              topupLastTimeVal)
   )
 }
 
@@ -483,7 +486,7 @@ func adminRegisterAsset(baseAssetStr:        String, shareAssetName:          St
   let internalBaseAssetId = this.getInteger(keyNextInternalAssetId()).valueOrElse(0)
   let internalBaseAssetStr = internalBaseAssetId.toString()
   [
-  StringEntry(keyAssetCfg(baseAssetStr),
+  StrE(keyAssetCfg(baseAssetStr),
               dataAssetCfg(shareAssetStr,
                   internalBaseAssetStr,
                   decimalsMultBothAssets,
@@ -497,16 +500,16 @@ func adminRegisterAsset(baseAssetStr:        String, shareAssetName:          St
                   submitLimitsShareMax,
                   submitLimitsShareReset,
                   adminAddress)),
-  StringEntry(keyMappingsInternal2baseAssetId(internalBaseAssetId), baseAssetStr),
-  StringEntry(keyMappingsBaseAsset2internalId(baseAssetStr), internalBaseAssetStr),
-  StringEntry(keyMappingsShare2baseAssetId(shareAssetStr), baseAssetStr),
-  StringEntry(keyMappingsBaseAsset2shareId(baseAssetStr), shareAssetStr),
+  StrE(keyMappingsInternal2baseAssetId(internalBaseAssetId), baseAssetStr),
+  StrE(keyMappingsBaseAsset2internalId(baseAssetStr), internalBaseAssetStr),
+  StrE(keyMappingsShare2baseAssetId(shareAssetStr), baseAssetStr),
+  StrE(keyMappingsBaseAsset2shareId(baseAssetStr), shareAssetStr),
   BooleanEntry(keyShutdownSubmitOperation(internalBaseAssetStr), false),
-  StringEntry(keyShutdownManager(internalBaseAssetStr), shutdownManagerAddress),
-  IntegerEntry(keyNextInternalAssetId(), internalBaseAssetId + 1),
-  IntegerEntry(keyPriceLast(internalBaseAssetStr), startPrice),
-  IntegerEntry(keyPriceHistory(internalBaseAssetStr, height, lastBlock.timestamp), startPrice),
-  IntegerEntry(keyTopUpCurrentIdx(internalBaseAssetStr), 0),
+  StrE(keyShutdownManager(internalBaseAssetStr), shutdownManagerAddress),
+  IntE(keyNextInternalAssetId(), internalBaseAssetId + 1),
+  IntE(keyPriceLast(internalBaseAssetStr), startPrice),
+  IntE(keyPriceHistory(internalBaseAssetStr, height, lastBlock.timestamp), startPrice),
+  IntE(keyTopUpCurrentIdx(internalBaseAssetStr), 0),
   RemainingLimitsStringEntry(keyLimitsRemaining(internalBaseAssetStr), submitLimitsBaseMax, submitLimitsShareMax),
   shareAssetIssueAction,
   ScriptTransfer(topupManagerAddress.addressFromStringValue(), shareInitAmount, shareAssetId)
@@ -595,17 +598,17 @@ func operationsMutex(baseAssetStr: String) = {
 func topUpBalance(baseAssetStr: String, income: Int) = {
   let baseAssetId = baseAssetStr.fromBase58String()
 
-  let assetCfgArray           = readAssetCfgOrFail(baseAssetStr)
+  let cfg           = readAssetCfgOrFail(baseAssetStr)
 
-  let shareAssetId            = assetCfgArray[IdxCfgShareAssetId].fromBase58String()
-  let priceMult               = assetCfgArray[IdxCfgDecimalsMultPrice].parseIntValue()
-  let bothAssetMult           = assetCfgArray[IdxCfgDecimalsMultBothAssets].parseIntValue()
-  let topupIntervalInBlocks   = assetCfgArray[IdxCfgTopupIntervalInBlocks].parseIntValue()
-  let topupMaxNegativePart    = assetCfgArray[IdxCfgTopupMaxNegativePart].parseIntValue()
-  let internalBaseAssetStr    = assetCfgArray[IdxCfgInternalBaseAsset]
-  let topUpManagerAddressStr  = assetCfgArray[IdxCfgTopupManagerAddress]
-  let submitLimitsBaseMax     = assetCfgArray[IdxCfgSubmitLimitsBaseMax].parseIntValue()
-  let submitLimitsShareMax    = assetCfgArray[IdxCfgSubmitLimitsShareMax].parseIntValue()
+  let shareAssetId            = cfg[IdxCfgShareAssetId].fromBase58String()
+  let priceMult               = cfg[IdxCfgDecimalsMultPrice].parseIntValue()
+  let bothAssetMult           = cfg[IdxCfgDecimalsMultBothAssets].parseIntValue()
+  let topupIntervalInBlocks   = cfg[IdxCfgTopupIntervalInBlocks].parseIntValue()
+  let topupMaxNegativePart    = cfg[IdxCfgTopupMaxNegativePart].parseIntValue()
+  let internalBaseAssetStr    = cfg[IdxCfgInternalBaseAsset]
+  let topUpManagerAddressStr  = cfg[IdxCfgTopupManagerAddress]
+  let submitLimitsBaseMax     = cfg[IdxCfgSubmitLimitsBaseMax].parseIntValue()
+  let submitLimitsShareMax    = cfg[IdxCfgSubmitLimitsShareMax].parseIntValue()
 
   let topUpCurrentIdxKEY = keyTopUpCurrentIdx(internalBaseAssetStr)
   let prevTopUpIdx = getIntOrFail(topUpCurrentIdxKEY)
@@ -637,20 +640,17 @@ func topUpBalance(baseAssetStr: String, income: Int) = {
   let diffTuple = calcTotalLockedDiff("topup", "", internalBaseAssetStr, price, priceMult, 0, baseAssetId, shareAssetId)
   let topupTotalDiff = diffTuple._1
 
-  let priceAthKEY = keyPriceATH(internalBaseAssetStr)
-  let prevPriceATH = this.getInteger(priceAthKEY).valueOrElse(0)
-
-  [IntegerEntry(keyPriceLast(internalBaseAssetStr), price),
-    IntegerEntry(keyPriceHistory(internalBaseAssetStr, height, lastBlock.timestamp), price),
-    IntegerEntry(keyPriceByTopUpIdx(internalBaseAssetStr, currentTopUpIdx), price),
-    IntegerEntry(topUpCurrentIdxKEY, currentTopUpIdx),
-    IntegerEntry(priceAthKEY, if (price > prevPriceATH) then price else prevPriceATH),
-    IntegerEntry(topUpLastHeightKEY, height)
+  [IntE(keyPriceLast(internalBaseAssetStr), price),
+    IntE(keyPriceHistory(internalBaseAssetStr, height, lastBlock.timestamp), price),
+    IntE(keyPriceByTopUpIdx(internalBaseAssetStr, currentTopUpIdx), price),
+    IntE(topUpCurrentIdxKEY, currentTopUpIdx),
+    IntE(priceAthKEY, if (price > prevPriceATH) then price else prevPriceATH),
+    IntE(topUpLastHeightKEY, height)
   ]
     :+ TotalLockedStringEntry("DECREMENT", keyTotalLocked(internalBaseAssetStr), topupTotalDiff)
     # release mutex
     :+ TopupMutexIntEntry(internalBaseAssetStr, 0)
-    :+ IntegerEntry(keyTopupLastTimestamp(internalBaseAssetStr), lastBlock.timestamp)
+    :+ IntE(keyTopupLastTimestamp(internalBaseAssetStr), lastBlock.timestamp)
     # reset limits
     :+ RemainingLimitsStringEntry(keyLimitsRemaining(internalBaseAssetStr), submitLimitsBaseMax, submitLimitsShareMax)
     :+ Burn(shareAssetId, topupTotalDiff[IdxTotalLockedInShare])
