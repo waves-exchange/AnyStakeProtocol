@@ -30,6 +30,10 @@ func failTopupManagerOnly(topupManagerAddress: String) = {
   throw("opertion denied: only topUpManager=" + topupManagerAddress + " can send such transactions")
 }
 
+func failTopupMaxPriceDeviation(price: Int, minAllowedPrice: Int) = {
+  throw("topup is not allowed - max deviation from ATH price exceeds: newPrice=" + price.toString() + " minAllowedPrice=" + minAllowedPrice.toString())
+}
+
 func convertShare2Base(shareAmount: Int, price: Int, priceMult: Int) = {fraction(shareAmount, price, priceMult)}
 func convertBase2Share(baseAmount: Int, price: Int, priceMult: Int) = {fraction(baseAmount, priceMult, price)}
 
@@ -173,29 +177,31 @@ func readTotalLocked(key: String) = {
   )
 }
 
+# @returns {$totalDiff, $userDiff, $outAmount, $outAssetId, $isLockedByHeight}
 func calcTotalLockedDiff(direction: String, operationType: String, innerBaseStr: String, price: Int, priceMult: Int, inAmount: Int, baseAssetId: ByteVector, shareAssetId: ByteVector) = {
   let t = direction + operationType
+  let emptyVect = "".fromBase58String()
   if (t == "submitP") then {
     let totalDiff = dataTotalLockedInt(0, 0, inAmount, 0)
     let userDiff  = totalDiff
-    (totalDiff, userDiff, 0, "".fromBase58String())
+    (totalDiff, userDiff, 0, emptyVect, false)
   }
   else if (t == "submitG") then {
     let totalDiff = dataTotalLockedInt(inAmount, 0, 0, 0)
     let userDiff  = totalDiff
-    (totalDiff, userDiff, 0, "".fromBase58String())
+    (totalDiff, userDiff, 0, emptyVect, true)
   }
   else if (t == "executeP") then {
     let outAmount = convertBase2Share(inAmount, price, priceMult)
     let totalDiff = dataTotalLockedInt(0, 0, 0, outAmount)
     let userDiff  = dataTotalLockedInt(0, 0, inAmount, 0)
-    (totalDiff, userDiff, outAmount, shareAssetId)
+    (totalDiff, userDiff, outAmount, shareAssetId, false)
   }
   else if (t == "executeG") then {
     let outAmount = convertShare2Base(inAmount, price, priceMult)
     let totalDiff = dataTotalLockedInt(0, outAmount, 0, 0)
     let userDiff  = dataTotalLockedInt(inAmount, 0, 0, 0)
-    (totalDiff, userDiff, outAmount, baseAssetId)
+    (totalDiff, userDiff, outAmount, baseAssetId, false)
   }
   else if (t == "topup") then {
     let totalLockedArray = readTotalLocked(keyTotalLocked(innerBaseStr))
@@ -208,7 +214,7 @@ func calcTotalLockedDiff(direction: String, operationType: String, innerBaseStr:
         -1*convertShare2Base(totalLockedInShareAmount, price, priceMult),
         totalLockedInBaseAmount,
         -1*convertBase2Share(totalLockedInBaseAmount, price, priceMult))
-    (totalDiff, [], 0, "".fromBase58String())
+    (totalDiff, [], 0, emptyVect, false)
   }
   else throw("Unsupported Type " + t)
 }
@@ -342,11 +348,12 @@ func commonSubmit(operationType: String, i: Invocation, inAmount: Int, inAssetId
 
   let baseAssetId = baseAssetStr.fromBase58String()
 
-  let cfgArray = readAssetCfgOrFail(baseAssetStr)
-  let shareAssetStr = cfgArray[IdxCfgShareAssetId]
-  let shareAssetId = shareAssetStr.fromBase58String()
-  let decimalsMultBothAssets = cfgArray[IdxCfgDecimalsMultBothAssets].parseIntValue()
-  let innerBaseStr = cfgArray[IdxCfgInternalBaseAsset]
+  let cfgArray                = readAssetCfgOrFail(baseAssetStr)
+  let shareAssetStr           = cfgArray[IdxCfgShareAssetId]
+  let shareAssetId            = shareAssetStr.fromBase58String()
+  let decimalsMultBothAssets  = cfgArray[IdxCfgDecimalsMultBothAssets].parseIntValue()
+  let innerBaseStr            = cfgArray[IdxCfgInternalBaseAsset]
+  let getDelayBlocks          = cfgArray[IdxCfgGetDelayBlocks].parseIntValue()
 
   let limitsKEY = keyLimitsRemaining(innerBaseStr)
   let limitsCfgArray = getStringOrFail(limitsKEY).split(SEP)
@@ -366,9 +373,10 @@ func commonSubmit(operationType: String, i: Invocation, inAmount: Int, inAssetId
   if (limitsRemainingBaseNew < 0 || limitsRemainingShareNew < 0) then failSubmitLimitsExceeds(limitsRemainingBase, limitsRemainingShare, limitsRemainingBaseNew, limitsRemainingShareNew) else
 
   let topUpCurrentIdx = getIntOrFail(keyTopUpCurrentIdx(innerBaseStr))
+  let endHeight = if (diffTuple._5) then height + getDelayBlocks else height
   [StrE(
       keyOperation(operationType, innerBaseStr, userAddressStr, i.transactionId.toBase58String()),
-      dataOperation("PENDING", inAmount, 0, 0, height, lastBlock.timestamp, 0, 0, topUpCurrentIdx + 1))
+      dataOperation("PENDING", inAmount, 0, 0, height, lastBlock.timestamp, endHeight, 0, topUpCurrentIdx + 1))
   ]
   :+ TotalLockedStringEntry("INCREMENT", keyTotalLocked(innerBaseStr), diffTuple._1)
   :+ TotalLockedStringEntry("INCREMENT", keyTotalLockedByUser(innerBaseStr, userAddressStr), diffTuple._2)
@@ -392,11 +400,13 @@ func commonExecute(operationType: String, baseAssetStr: String, userAddressStr: 
   let status            = opArray[IdxOperStatus]
   let inAmount          = opArray[IdxOperInAmount].parseIntValue()
   let topupUnlockIdx    = opArray[IdxOperTopupUnlockIdx].parseIntValue()
+  let unlockHeight      = opArray[IdxOperEndHeight].parseIntValue()
   let currTopUpIdx      = getIntOrFail(keyTopUpCurrentIdx(innerBaseStr))
   let priceByTopUpId    = getIntOrFail(keyPriceByTopUpIdx(innerBaseStr, topupUnlockIdx))
 
   if (status != "PENDING") then failExecuteGet("Status is not PENDING", baseAssetStr, userAddressStr, submitTxIdStr, operationType) else
   if (currTopUpIdx < topupUnlockIdx) then failExecuteGet("OperLock[" + topupUnlockIdx.toString() + "] > " + currTopUpIdx.toString(), baseAssetStr, userAddressStr, submitTxIdStr, operationType) else
+  if (height < unlockHeight) then failExecuteGet("OperHeightLock[" + unlockHeight.toString() + "] > " + height.toString(), baseAssetStr, userAddressStr, submitTxIdStr, operationType) else
 
   let diffTuple = calcTotalLockedDiff("execute", operationType, innerBaseStr, priceByTopUpId, decimalsMultPrice, inAmount, baseAssetId, shareAssetId)
   let outAmount = diffTuple._3
@@ -508,6 +518,7 @@ func adminRegisterAsset(baseAssetStr:        String, shareAssetName:          St
   StrE(keyShutdownManager(innerBaseStr), shutdownManagerAddress),
   IntE(keyNextInternalAssetId(), internalBaseAssetId + 1),
   IntE(keyPriceLast(innerBaseStr), startPrice),
+  IntE(keyPriceATH(innerBaseStr), startPrice),
   IntE(keyPriceHistory(innerBaseStr, height, lastBlock.timestamp), startPrice),
   IntE(keyTopUpCurrentIdx(innerBaseStr), 0),
   RemainingLimitsStringEntry(keyLimitsRemaining(innerBaseStr), submitLimitsBaseMax, submitLimitsShareMax),
@@ -605,7 +616,7 @@ func topUpBalance(baseAssetStr: String, income: Int) = {
   let bothAssetMult           = cfg[IdxCfgDecimalsMultBothAssets].parseIntValue()
   let topupIntervalInBlocks   = cfg[IdxCfgTopupIntervalInBlocks].parseIntValue()
   let topupMaxNegativePart    = cfg[IdxCfgTopupMaxNegativePart].parseIntValue()
-  let innerBaseStr    = cfg[IdxCfgInternalBaseAsset]
+  let innerBaseStr            = cfg[IdxCfgInternalBaseAsset]
   let topUpManagerAddressStr  = cfg[IdxCfgTopupManagerAddress]
   let submitLimitsBaseMax     = cfg[IdxCfgSubmitLimitsBaseMax].parseIntValue()
   let submitLimitsShareMax    = cfg[IdxCfgSubmitLimitsShareMax].parseIntValue()
@@ -614,6 +625,16 @@ func topUpBalance(baseAssetStr: String, income: Int) = {
   let prevTopUpIdx = getIntOrFail(topUpCurrentIdxKEY)
   let currentTopUpIdx = prevTopUpIdx + 1
 
+  let topUpLastHeightKEY = keyTopUpLastHeight(innerBaseStr, i.caller.toString())
+  let topUpLastHeight = this.getInteger(topUpLastHeightKEY).valueOrElse(0)
+
+  let priceAthKEY = keyPriceATH(innerBaseStr)
+  let prevPriceATH = this.getInteger(priceAthKEY).valueOrElse(0)
+
+  if (i.caller.toString() != topUpManagerAddressStr) then failTopupManagerOnly(topUpManagerAddressStr) else
+  if (height - topUpLastHeight < topupIntervalInBlocks) then throw("1 topup per " + topupIntervalInBlocks.toString() + " blocks from the same address is allowed") else
+
+  let price = genericCalcPrice(innerBaseStr, baseAssetId, income, shareAssetId, priceMult)._1
   let valid =
     if (income > 0) then {
       let pmt = i.payments[0].value()
@@ -623,25 +644,15 @@ func topUpBalance(baseAssetStr: String, income: Int) = {
       if (pmt.amount != income) then throw("attached payment.amount is NOT matched passed income argument") else
       true
     } else if (income < 0) then {
-      let baseBalance = this.assetBalance(baseAssetId)
-      let allowedAmount = fraction(topupMaxNegativePart, baseBalance, bothAssetMult)
-      if (-income > allowedAmount) then throw("topup negative income couldn't be greater than " + allowedAmount.toString()) else
+      let minAllowedPrice = fraction(prevPriceATH, 1*bothAssetMult - topupMaxNegativePart, bothAssetMult)
+      if (price < minAllowedPrice) then failTopupMaxPriceDeviation(price, minAllowedPrice) else
       true
     } else throw("zero income is not allowed")
 
-  let topUpLastHeightKEY = keyTopUpLastHeight(innerBaseStr, i.caller.toString())
-  let topUpLastHeight = this.getInteger(topUpLastHeightKEY).valueOrElse(0)
-
-  if (i.caller.toString() != topUpManagerAddressStr) then failTopupManagerOnly(topUpManagerAddressStr) else
   if (!valid) then throw("validation failed") else
-  if (height - topUpLastHeight < topupIntervalInBlocks) then throw("1 topup per " + topupIntervalInBlocks.toString() + " blocks from the same address is allowed") else
-  let price = genericCalcPrice(innerBaseStr, baseAssetId, income, shareAssetId, priceMult)._1
 
   let diffTuple = calcTotalLockedDiff("topup", "", innerBaseStr, price, priceMult, 0, baseAssetId, shareAssetId)
   let topupTotalDiff = diffTuple._1
-
-  let priceAthKEY = keyPriceATH(innerBaseStr)
-  let prevPriceATH = this.getInteger(priceAthKEY).valueOrElse(0)
 
   [IntE(keyPriceLast(innerBaseStr), price),
     IntE(keyPriceHistory(innerBaseStr, height, lastBlock.timestamp), price),
