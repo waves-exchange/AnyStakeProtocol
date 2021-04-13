@@ -168,7 +168,7 @@ Value| [submitGet V_01](#submitget-operation-v_01).val`__${topUpIdxUnlock}` |
 
 ### Mainnet Contract
 * Dapp: `3P3hCvE9ZfeMnZE6kXzR6YBzxhxM8J6PE7K` [wavesexplorer](https://wavesexplorer.com/address/3P3hCvE9ZfeMnZE6kXzR6YBzxhxM8J6PE7K/tx) OR [w8io](https://w8io.ru/3P3hCvE9ZfeMnZE6kXzR6YBzxhxM8J6PE7K)
-  * USDTLAMBO token id: `TBD` [wavesexplorer](https://wavesexplorer.com/assets/TBD) OR  [w8io](https://w8io.ru/TBD)
+  * USDTLAMBO token id: `4K35syPfY2tYrNWzjh1vbmH39qE4qPV7SwLwekrzD82r` [wavesexplorer](https://wavesexplorer.com/assets/4K35syPfY2tYrNWzjh1vbmH39qE4qPV7SwLwekrzD82r) OR  [w8io](https://w8io.ru/4K35syPfY2tYrNWzjh1vbmH39qE4qPV7SwLwekrzD82r)
 
 ### Testnet Contract
 * [3NAkRz8VVS1aizMWiZ7Hxs3N9vrfhpR6579](https://testnet.wavesexplorer.com/address/3NAkRz8VVS1aizMWiZ7Hxs3N9vrfhpR6579/tx)
