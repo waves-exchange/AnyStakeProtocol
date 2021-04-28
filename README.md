@@ -121,6 +121,7 @@ No extensions, see corresponding
 ### Mainnet Contract
 * Dapp: `3PKaRXj6pBb23A8k965eEgBAhhJ4FSDKS5e` [wavesexplorer](https://wavesexplorer.com/address/3PKaRXj6pBb23A8k965eEgBAhhJ4FSDKS5e/tx) OR [w8io](https://w8io.ru/3PKaRXj6pBb23A8k965eEgBAhhJ4FSDKS5e)
   * AUSDTLPM token id: `3iAUM9xnKdu2TWBXRqPvYoGsbiZEbDPP1okUf5v9RJNz` [wavesexplorer](https://wavesexplorer.com/assets/3iAUM9xnKdu2TWBXRqPvYoGsbiZEbDPP1okUf5v9RJNz) OR  [w8io](https://w8io.ru/3iAUM9xnKdu2TWBXRqPvYoGsbiZEbDPP1okUf5v9RJNz)
+  * ABTCLPM token id: `4NyYnDGopZvEAQ3TcBDJrJFWSiA2xzuAw83Ms8jT7WuK` [wavesexplorer](https://wavesexplorer.com/assets/4NyYnDGopZvEAQ3TcBDJrJFWSiA2xzuAw83Ms8jT7WuK) OR  [w8io](https://w8io.ru/4NyYnDGopZvEAQ3TcBDJrJFWSiA2xzuAw83Ms8jT7WuK)
 
 
 ### Testnet Contract
