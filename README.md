@@ -122,6 +122,7 @@ No extensions, see corresponding
 * Dapp: `3PKaRXj6pBb23A8k965eEgBAhhJ4FSDKS5e` [wavesexplorer](https://wavesexplorer.com/address/3PKaRXj6pBb23A8k965eEgBAhhJ4FSDKS5e/tx) OR [w8io](https://w8io.ru/3PKaRXj6pBb23A8k965eEgBAhhJ4FSDKS5e)
   * AUSDTLPM token id: `3iAUM9xnKdu2TWBXRqPvYoGsbiZEbDPP1okUf5v9RJNz` [wavesexplorer](https://wavesexplorer.com/assets/3iAUM9xnKdu2TWBXRqPvYoGsbiZEbDPP1okUf5v9RJNz) OR  [w8io](https://w8io.ru/3iAUM9xnKdu2TWBXRqPvYoGsbiZEbDPP1okUf5v9RJNz)
   * ABTCLPM token id: `4NyYnDGopZvEAQ3TcBDJrJFWSiA2xzuAw83Ms8jT7WuK` [wavesexplorer](https://wavesexplorer.com/assets/4NyYnDGopZvEAQ3TcBDJrJFWSiA2xzuAw83Ms8jT7WuK) OR  [w8io](https://w8io.ru/4NyYnDGopZvEAQ3TcBDJrJFWSiA2xzuAw83Ms8jT7WuK)
+  * AETHLPM token id: `Hp4dcR5hYUkrAUrNPazSWEFnt5rUr2suxa2AMo4KsFEf` [wavesexplorer](https://wavesexplorer.com/assets/Hp4dcR5hYUkrAUrNPazSWEFnt5rUr2suxa2AMo4KsFEf) OR  [w8io](https://w8io.ru/Hp4dcR5hYUkrAUrNPazSWEFnt5rUr2suxa2AMo4KsFEf)
 
 
 ### Testnet Contract
