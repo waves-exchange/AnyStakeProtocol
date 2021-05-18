@@ -6,7 +6,8 @@ Any Stake Protocol is designed to unify callable methods and data state between 
 - [AnyStake Data State Specification](#anystake-data-state-specification)
 - Products
     - [LP Product Implementation](#lp-product-implementation)
-    - [ALGO Product Implementation](#algo-product-implementation)
+    - [ALGO Medium Product Implementation](#algo-medium-product-implementation)
+    - [ALGO Aggressive Product Implementation](#algo-aggressive-product-implementation)
     - [LAMBO Product Implementation](#lambo-product-implementation)
 
 ## AnyStake Interface
@@ -117,7 +118,7 @@ No extensions, see corresponding
 * ${startTimestamp} == ${endTimestamp}
 
 
-## ALGO Product Implementation
+## ALGO Medium Product Implementation
 ### Mainnet Contract
 * Dapp: `3PKaRXj6pBb23A8k965eEgBAhhJ4FSDKS5e` [wavesexplorer](https://wavesexplorer.com/address/3PKaRXj6pBb23A8k965eEgBAhhJ4FSDKS5e/tx) OR [w8io](https://w8io.ru/3PKaRXj6pBb23A8k965eEgBAhhJ4FSDKS5e)
   * AUSDTLPM token id: `3iAUM9xnKdu2TWBXRqPvYoGsbiZEbDPP1okUf5v9RJNz` [wavesexplorer](https://wavesexplorer.com/assets/3iAUM9xnKdu2TWBXRqPvYoGsbiZEbDPP1okUf5v9RJNz) OR  [w8io](https://w8io.ru/3iAUM9xnKdu2TWBXRqPvYoGsbiZEbDPP1okUf5v9RJNz)
@@ -165,6 +166,14 @@ Value| [submitGet V_01](#submitget-operation-v_01).val`__${topUpIdxUnlock}` |
    * `${endTimestamp}`
    * `${price}`
    * `${outBaseTokensAmount}`
+
+## ALGO Aggressive Product Implementation
+Same logic as ALGO Medium but more risks
+### Mainnet Contract
+* Dapp: `3PDepwsPLPmFTGQM3H51jbR9b5522eM9kth` [wavesexplorer](https://wavesexplorer.com/address/3PDepwsPLPmFTGQM3H51jbR9b5522eM9kth/tx) OR [w8io](https://w8io.ru/3PDepwsPLPmFTGQM3H51jbR9b5522eM9kth)
+  * AUSDTLPA token id: `K9hzUfVF4Koc5BoihpK1v6GXEpukERCEHNuSRNt83F9` [wavesexplorer](https://wavesexplorer.com/assets/K9hzUfVF4Koc5BoihpK1v6GXEpukERCEHNuSRNt83F9) OR  [w8io](https://w8io.ru/K9hzUfVF4Koc5BoihpK1v6GXEpukERCEHNuSRNt83F9)
+### Testnet Contract
+* [3N9m83Dd7m2Vt19KrNZEpXXHb1RYA5fGFCS](https://testnet.wavesexplorer.com/address/3N9m83Dd7m2Vt19KrNZEpXXHb1RYA5fGFCS/tx)
 
 ## LAMBO Product Implementation
 
