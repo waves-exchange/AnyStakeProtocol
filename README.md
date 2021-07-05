@@ -9,6 +9,7 @@ Any Stake Protocol is designed to unify callable methods and data state between 
     - [ALGO Medium Product Implementation](#algo-medium-product-implementation)
     - [ALGO Aggressive Product Implementation](#algo-aggressive-product-implementation)
     - [LAMBO Product Implementation](#lambo-product-implementation)
+    - [ALGO Conservative Product Implementation](#algo-conservative-product-implementation)
 
 ## AnyStake Interface
 ```python
@@ -193,3 +194,12 @@ same as [ALGO submitPut](#algo-submitput)
 ### LAMBO submitGet
 with one exception as [ALGO submitGet](#algo-submitget):
 * `${endHeight}` is available right away after `submitGet` and calculated as `${currentBlockchainHeight} + .${getDelayBlocks}` (see [Config V_01](#config-v_01)). It is used to block operation till this height.
+
+## ALGO Conservative Product Implementation
+Similar logic as ALGO Medium
+### Mainnet Contract
+* Dapp: `3PLDtdSudp3ao5WWU4EzXC6D7TQm7t3dSWC` [wavesexplorer](https://wavesexplorer.com/address/3PLDtdSudp3ao5WWU4EzXC6D7TQm7t3dSWC/tx) OR [w8io](https://w8io.ru/3PLDtdSudp3ao5WWU4EzXC6D7TQm7t3dSWC)
+  * ABTCLPC token id: `B1dG9exXzJdFASDF2MwCE7TYJE5My4UgVRx43nqDbF6s` [wavesexplorer](https://wavesexplorer.com/assets/B1dG9exXzJdFASDF2MwCE7TYJE5My4UgVRx43nqDbF6s) OR  [w8io](https://w8io.ru/B1dG9exXzJdFASDF2MwCE7TYJE5My4UgVRx43nqDbF6s)
+  * AETHLPC token id: `J7UiL1tgEfPaHkrLCirqoyu4v6rVMDc6yPEV95ixorVB` [wavesexplorer](https://wavesexplorer.com/assets/J7UiL1tgEfPaHkrLCirqoyu4v6rVMDc6yPEV95ixorVB) OR  [w8io](https://w8io.ru/J7UiL1tgEfPaHkrLCirqoyu4v6rVMDc6yPEV95ixorVB)
+### Testnet Contract
+* [3My9pmwLQ2CRvUXtT9f6B8E5rHAkqMnP4xs](https://testnet.wavesexplorer.com/address/3My9pmwLQ2CRvUXtT9f6B8E5rHAkqMnP4xs/tx)
