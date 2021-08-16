@@ -125,6 +125,7 @@ No extensions, see corresponding
   * AUSDTLPM token id: `3iAUM9xnKdu2TWBXRqPvYoGsbiZEbDPP1okUf5v9RJNz` [wavesexplorer](https://wavesexplorer.com/assets/3iAUM9xnKdu2TWBXRqPvYoGsbiZEbDPP1okUf5v9RJNz) OR  [w8io](https://w8io.ru/3iAUM9xnKdu2TWBXRqPvYoGsbiZEbDPP1okUf5v9RJNz)
   * ABTCLPM token id: `4NyYnDGopZvEAQ3TcBDJrJFWSiA2xzuAw83Ms8jT7WuK` [wavesexplorer](https://wavesexplorer.com/assets/4NyYnDGopZvEAQ3TcBDJrJFWSiA2xzuAw83Ms8jT7WuK) OR  [w8io](https://w8io.ru/4NyYnDGopZvEAQ3TcBDJrJFWSiA2xzuAw83Ms8jT7WuK)
   * AETHLPM token id: `Hp4dcR5hYUkrAUrNPazSWEFnt5rUr2suxa2AMo4KsFEf` [wavesexplorer](https://wavesexplorer.com/assets/Hp4dcR5hYUkrAUrNPazSWEFnt5rUr2suxa2AMo4KsFEf) OR  [w8io](https://w8io.ru/Hp4dcR5hYUkrAUrNPazSWEFnt5rUr2suxa2AMo4KsFEf)
+  * AUSDCLPM token id: `A9h1bQ2ycMPmS85Dp5NECymsoJ48ZrK8eThdECJZW94b` [wavesexplorer](https://wavesexplorer.com/assets/A9h1bQ2ycMPmS85Dp5NECymsoJ48ZrK8eThdECJZW94b) OR  [w8io](https://w8io.ru/A9h1bQ2ycMPmS85Dp5NECymsoJ48ZrK8eThdECJZW94b)
 
 
 ### Testnet Contract
@@ -173,6 +174,7 @@ Same logic as ALGO Medium but more risks
 ### Mainnet Contract
 * Dapp: `3PDepwsPLPmFTGQM3H51jbR9b5522eM9kth` [wavesexplorer](https://wavesexplorer.com/address/3PDepwsPLPmFTGQM3H51jbR9b5522eM9kth/tx) OR [w8io](https://w8io.ru/3PDepwsPLPmFTGQM3H51jbR9b5522eM9kth)
   * AUSDTLPA token id: `K9hzUfVF4Koc5BoihpK1v6GXEpukERCEHNuSRNt83F9` [wavesexplorer](https://wavesexplorer.com/assets/K9hzUfVF4Koc5BoihpK1v6GXEpukERCEHNuSRNt83F9) OR  [w8io](https://w8io.ru/K9hzUfVF4Koc5BoihpK1v6GXEpukERCEHNuSRNt83F9)
+  * AUSDCLPA token id: `7TiEKGoXwFXiQCKqj8773QJFY4tCrK3Yku9Q4zenJdPn` [wavesexplorer](https://wavesexplorer.com/assets/7TiEKGoXwFXiQCKqj8773QJFY4tCrK3Yku9Q4zenJdPn) OR  [w8io](https://w8io.ru/7TiEKGoXwFXiQCKqj8773QJFY4tCrK3Yku9Q4zenJdPn)
 ### Testnet Contract
 * [3N9m83Dd7m2Vt19KrNZEpXXHb1RYA5fGFCS](https://testnet.wavesexplorer.com/address/3N9m83Dd7m2Vt19KrNZEpXXHb1RYA5fGFCS/tx)
 
@@ -181,6 +183,7 @@ Same logic as ALGO Medium but more risks
 ### Mainnet Contract
 * Dapp: `3P3hCvE9ZfeMnZE6kXzR6YBzxhxM8J6PE7K` [wavesexplorer](https://wavesexplorer.com/address/3P3hCvE9ZfeMnZE6kXzR6YBzxhxM8J6PE7K/tx) OR [w8io](https://w8io.ru/3P3hCvE9ZfeMnZE6kXzR6YBzxhxM8J6PE7K)
   * USDTLAMBO token id: `4K35syPfY2tYrNWzjh1vbmH39qE4qPV7SwLwekrzD82r` [wavesexplorer](https://wavesexplorer.com/assets/4K35syPfY2tYrNWzjh1vbmH39qE4qPV7SwLwekrzD82r) OR  [w8io](https://w8io.ru/4K35syPfY2tYrNWzjh1vbmH39qE4qPV7SwLwekrzD82r)
+  * USDCLAMBO token id: `FaCgK3UfvkRF2WfFyKZRVasMmqPRoLG7nUv8HzR451dm` [wavesexplorer](https://wavesexplorer.com/assets/FaCgK3UfvkRF2WfFyKZRVasMmqPRoLG7nUv8HzR451dm) OR  [w8io](https://w8io.ru/FaCgK3UfvkRF2WfFyKZRVasMmqPRoLG7nUv8HzR451dm)
 
 ### Testnet Contract
 * [3NAkRz8VVS1aizMWiZ7Hxs3N9vrfhpR6579](https://testnet.wavesexplorer.com/address/3NAkRz8VVS1aizMWiZ7Hxs3N9vrfhpR6579/tx)
@@ -201,5 +204,7 @@ Similar logic as ALGO Medium
 * Dapp: `3PLDtdSudp3ao5WWU4EzXC6D7TQm7t3dSWC` [wavesexplorer](https://wavesexplorer.com/address/3PLDtdSudp3ao5WWU4EzXC6D7TQm7t3dSWC/tx) OR [w8io](https://w8io.ru/3PLDtdSudp3ao5WWU4EzXC6D7TQm7t3dSWC)
   * ABTCLPC token id: `B1dG9exXzJdFASDF2MwCE7TYJE5My4UgVRx43nqDbF6s` [wavesexplorer](https://wavesexplorer.com/assets/B1dG9exXzJdFASDF2MwCE7TYJE5My4UgVRx43nqDbF6s) OR  [w8io](https://w8io.ru/B1dG9exXzJdFASDF2MwCE7TYJE5My4UgVRx43nqDbF6s)
   * AETHLPC token id: `J7UiL1tgEfPaHkrLCirqoyu4v6rVMDc6yPEV95ixorVB` [wavesexplorer](https://wavesexplorer.com/assets/J7UiL1tgEfPaHkrLCirqoyu4v6rVMDc6yPEV95ixorVB) OR  [w8io](https://w8io.ru/J7UiL1tgEfPaHkrLCirqoyu4v6rVMDc6yPEV95ixorVB)
+  * AUSDCLPC token id: `VGLLW8XE5wyMU9NzKNn1s3qSx9AJ1oG8j1xzgwKnaZv` [wavesexplorer](https://wavesexplorer.com/assets/VGLLW8XE5wyMU9NzKNn1s3qSx9AJ1oG8j1xzgwKnaZv) OR  [w8io](https://w8io.ru/VGLLW8XE5wyMU9NzKNn1s3qSx9AJ1oG8j1xzgwKnaZv)
+  * AUSDTLPC token id: `EemDhgzLQ57hjFbNGYkPJtCnSz5eP2YdMa6H4Pum92z8` [wavesexplorer](https://wavesexplorer.com/assets/EemDhgzLQ57hjFbNGYkPJtCnSz5eP2YdMa6H4Pum92z8) OR  [w8io](https://w8io.ru/EemDhgzLQ57hjFbNGYkPJtCnSz5eP2YdMa6H4Pum92z8)
 ### Testnet Contract
 * [3My9pmwLQ2CRvUXtT9f6B8E5rHAkqMnP4xs](https://testnet.wavesexplorer.com/address/3My9pmwLQ2CRvUXtT9f6B8E5rHAkqMnP4xs/tx)
