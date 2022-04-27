@@ -381,17 +381,6 @@ func currentSysParamsREST(baseAssetStr: String)= {
 }
 
 @Verifier(tx)
-func verify() = {
-    let pubKeyAdminsList = [
-        "HQFWfwivutXksKxCDxrYGGEFES5JvFyEQyepM5fSkcxA",
-        "DXDY2itiEcYBtGkVLnkpHtDFyWQUkoLJz79uJ7ECbMrA",
-        "5PbG4AkQz8Ls8bU4LmBNZ1gtXV3VuUDKsA37hgbhx731"
-    ]
-    let s0 = if(sigVerify(tx.bodyBytes, tx.proofs[0], fromBase58String(pubKeyAdminsList[0]))) then 1 else 0
-    let s1 = if(sigVerify(tx.bodyBytes, tx.proofs[1], fromBase58String(pubKeyAdminsList[1]))) then 1 else 0
-    let s2 = if(sigVerify(tx.bodyBytes, tx.proofs[2], fromBase58String(pubKeyAdminsList[2]))) then 1 else 0
-    let count = s0 + s1 + s2
-
-    if (count < 2) then throw("invalid multisig: s0=" + s0.toString() + " s1=" + s1.toString() + " s2=" + s2.toString()) else
-    true
+func verify () = {
+  sigVerify(tx.bodyBytes, tx.proofs[0], fromBase58String("2Cbd8ozG7A1RyRNC3nNnZgHu7Ru4K3JCfpyPkhqr9zxq"))
 }
