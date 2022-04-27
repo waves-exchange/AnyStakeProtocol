@@ -700,3 +700,8 @@ func currentSysParamsREST(baseAssetStr: String)= {
 
   throw(restData)
 }
+
+@Verifier(tx)
+func verify () = {
+  sigVerify(tx.bodyBytes, tx.proofs[0], fromBase58String("2Cbd8ozG7A1RyRNC3nNnZgHu7Ru4K3JCfpyPkhqr9zxq"))
+}
